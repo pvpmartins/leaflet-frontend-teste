@@ -307,7 +307,6 @@ $.getJSON("https://terraq.com.br/api/teste-leaflet/pontos", function(data) {}).d
     );
 })()
 
-// OBS: Ficou faltando a implementação do zoom no grafico. não encontrei uma solução a tempo.
 
 
 // Gostaria de deixar registrado o meu agradecimento à oportunidade de mostrar meu trabalho.
