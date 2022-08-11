@@ -19,18 +19,18 @@ btnOpenPoints.className = "btn-open_points-panel"
 btnOpenPoints.innerText = "Selecionar Historico de Ponto"
 
 const btnClosePoints = document.createElement("img")
-btnClosePoints.src="../btnCancelCircled.png"
+btnClosePoints.src="../images/btnCancelCircled.png"
 btnClosePoints.className = "btn-close_points-panel"
 
 btnCloseUser.className="btn-close_user"
-btnCloseUser.src="../btnCancelCircled.png"
+btnCloseUser.src="../images/btnCancelCircled.png"
 
 const modalRecords = document.createElement("div")
 modalRecords.className="modal-records"
 
 const btnCloseModal = document.createElement("img")
 btnCloseModal.className = "btn-close_modal"
-btnCloseModal.src="../btnCancelCircled.png"
+btnCloseModal.src="../images/btnCancelCircled.png"
 
 const title = document.createElement("div")
 
@@ -262,7 +262,7 @@ const listarDadosUsuario = async () => {
     
     //Objeto com os Mapas(Layers) obtidos
     const baseMaps={
-        openStreet: L.tileLayer(layers[0].url), 
+        openStreet: L.tileLayer(layers[0].url),
         satelite: L.tileLayer(layers[1].url)
     }
 
@@ -276,6 +276,7 @@ const listarDadosUsuario = async () => {
         
     var popupContent = feature.properties.popupContent;
         if (feature.properties && feature.properties.popupContent) {
+            Object.keys
         popupContent += "<br> Temperatura: " +feature.properties.temperatura+ "ºC"
         popupContent += "<br> Umidade: " +feature.properties.umidade+"%"
         popupContent += "<br> Precipitacao: " +feature.properties.precipitacao
