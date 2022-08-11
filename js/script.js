@@ -19,18 +19,18 @@ btnOpenPoints.className = "btn-open_points-panel"
 btnOpenPoints.innerText = "Selecionar Historico de Ponto"
 
 const btnClosePoints = document.createElement("img")
-btnClosePoints.src="../images/btnCancelCircled.png"
+btnClosePoints.src="images/btnCancelCircled.png"
 btnClosePoints.className = "btn-close_points-panel"
 
 btnCloseUser.className="btn-close_user"
-btnCloseUser.src="../images/btnCancelCircled.png"
+btnCloseUser.src="images/btnCancelCircled.png"
 
 const modalRecords = document.createElement("div")
 modalRecords.className="modal-records"
 
 const btnCloseModal = document.createElement("img")
 btnCloseModal.className = "btn-close_modal"
-btnCloseModal.src="../images/btnCancelCircled.png"
+btnCloseModal.src="images/btnCancelCircled.png"
 
 const title = document.createElement("div")
 
