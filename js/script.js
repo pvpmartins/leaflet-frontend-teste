@@ -16,7 +16,7 @@ pointsPanel.className = "points-panel"
 
 const btnOpenPoints = document.createElement("div")
 btnOpenPoints.className = "btn-open_points-panel"
-btnOpenPoints.innerText = "Selecionar Historico de Ponto"
+btnOpenPoints.innerText = "Selecionar Historico de Pont gsgsso"
 
 const btnClosePoints = document.createElement("img")
 btnClosePoints.src="images/btnCancelCircled.png"
