@@ -76,72 +76,18 @@ h1{
     opacity: 1;
 }
 
-.display_dados-ponto{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    /* background-color: aliceblue; */
+
+.btn_historico{
+    background-color: green;
+    border: 0;
+    border-radius: 30px;
+    opacity: .7;
+    box-shadow: 2px 1px 3px black;
+    margin-top: 5px;
 }
 
-.btn-open_points-panel {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 7px;
-    height: 5vh;
-    width: 20vw;
-    
-    background-color: rgb(240, 248, 255);
-    bottom: 20px;
-    opacity: 0.7;
-}
-
-.btn-open_points-panel:hover{
-    opacity: 1.5;
-    box-shadow: 3px 2px 3px black;
-}
-
-.btn-close_points-panel {
-    position: absolute;
-    top: -30px;
-    right: -20px;
-    width: 30px;
-    opacity: 0.6;
-}
-
-.btn-close_points-panel:hover{
+.btn_historico:hover{
     opacity: 1;
-}
-
-.points-panel { 
-    bottom: 20px;
-    flex-wrap: wrap;
-    position: absolute;
-    /* margin-top: 10px; */
-    width: 60%;
-    height: 7%;
-    /* border: 1px solid black; */
-    display: none;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.point_id{
-    background-color: rgba(240, 248, 255, 0.726);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 5px;
-    height: 100%;
-    width: 40px;
-    opacity: 0.6;
-}
-
-.point_id:hover{
-    opacity: 1;
-    background-color: rgba(240, 248, 255, 0.938);
 }
 
 .modal-records{
