@@ -133,48 +133,27 @@ const renderChart = (dados) => {
     
     modalRecords.append(chart)
     
-
     const labels = dados.map(dado=>dado.data)
+
+    const colorDataset = (index) => {
+        const colors = ["#00a1ff", "rgb(185 96 187 / 73%)", "rgb(96 187 162 / 73%)", "#bac55b"]
+        if (index <= colors.length) {
+            return colors[index]
+        } 
+    }
     
-    console.log(dados.map(dado=>dado.data));
     const data = {
         labels,
-        datasets: [
-            {
-                data: dados.map(dado=>dado.temperatura),
-                label: "Temperatura (ºC)",
-                borderColor: "#00a1ff",
-                fill: false
-            },
-
-            {
-                data: dados.map(dado=>dado.precipitacao),
-                label:"Precipitação",
-                borderColor: "red",
-                hidden: true,
-            },
-
-            {
-                data: dados.map(dado=>dado.umidade),
-                label:"Umidade",
-                borderColor: "yellow",
-                hidden: true,
-            },
-            {
-                data: dados.map(dado=>dado.vento),
-                label:"Vento",
-                hidden: true,
-                borderColor: "green"
-            },
-            {
-                data: dados.map(dado=>dado.visibilidade),
-                label:"Visibilidade",
-                hidden: true,
-                borderColor: "red"
+        datasets: Object.keys(dados[0]).map((propertie,index)=> {
+            const dataset = {
+                data: dados.map(dado=>dado[propertie]),
+                label: propertie,
+                borderColor: colorDataset(index),
+                hidden: propertie === "temperatura" ? false : true
             }
-        ]
+            return dataset
+        })     
     }
-    console.log(dados.map(dado=>dado.temperatura)[2]);
 
     const config = {
         type: 'line',
@@ -274,14 +253,12 @@ const listarDadosUsuario = async () => {
     
     function onEachFeature(feature, layer) {
         
-    var popupContent = feature.properties.popupContent;
+        let popupContent;
         if (feature.properties && feature.properties.popupContent) {
-            Object.keys
-        popupContent += "<br> Temperatura: " +feature.properties.temperatura+ "ºC"
-        popupContent += "<br> Umidade: " +feature.properties.umidade+"%"
-        popupContent += "<br> Precipitacao: " +feature.properties.precipitacao
-        popupContent += "<br> Visibilidade: " +feature.properties.visibilidade
-        popupContent += "<br> Vento: " +feature.properties.vento + "km/h"
+            
+            Object.keys(feature.properties).forEach(propertie =>{
+                popupContent += `<br>` +feature.properties[propertie]
+            })
     }
 
     layer.bindPopup(popupContent);
