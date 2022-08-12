@@ -11,16 +11,9 @@ btnOpenUser.innerText="Abrir Menu Usuário"
 const displayDadosPonto = document.createElement("div")
 displayDadosPonto.className = "display_dados-ponto"
 
-const pointsPanel = document.createElement("div")
-pointsPanel.className = "points-panel"
-
 const btnOpenPoints = document.createElement("div")
 btnOpenPoints.className = "btn-open_points-panel"
 btnOpenPoints.innerText = "Selecionar Historico de Pontos"
-
-const btnClosePoints = document.createElement("img")
-btnClosePoints.src="images/btnCancelCircled.png"
-btnClosePoints.className = "btn-close_points-panel"
 
 btnCloseUser.className="btn-close_user"
 btnCloseUser.src="images/btnCancelCircled.png"
@@ -34,12 +27,19 @@ btnCloseModal.src="images/btnCancelCircled.png"
 
 const title = document.createElement("div")
 
-body.append(btnOpenUser, pointsPanel, btnOpenPoints, modalRecords)
+body.append(btnOpenUser, modalRecords)
 displayUser.append(btnCloseUser)
-pointsPanel.append(btnClosePoints)
 modalRecords.append(title, btnCloseModal)
 
-// Eventos para troca de display em butões
+// Eventos para troca de display em botões
+
+// Seleção de botão via Event Delegation
+body.addEventListener('click', (e)=>{
+    if(e.target.className === "btn_historico") {
+        renderModal(e.target.value)
+    }
+})
+
 btnOpenUser.addEventListener('click', ()=>{
     if(displayUser.style.display = "none") {
         displayUser.style.display = "flex"
@@ -51,20 +51,6 @@ btnCloseUser.addEventListener('click', ()=>{
     if(displayUser.style.display="flex") {
         displayUser.style.display = "none"
         btnOpen.style.display = "flex"
-    }
-})
-
-btnOpenPoints.addEventListener('click', ()=>{
-    if(pointsPanel.style.display = "none") {
-        pointsPanel.style.display = "flex"
-        btnOpenPoints.style.display = "none"
-    }
-})
-
-btnClosePoints.addEventListener('click', ()=>{
-    if(pointsPanel.style.display = "flex") {
-        pointsPanel.style.display = "none"
-        btnOpenPoints.style.display = "flex"
     }
 })
 
@@ -104,6 +90,18 @@ const dadosUsuario = async () => {
 
 // Funções para renderização de elementos no DOM
 
+const renderModal = async(id) => {
+    if(modalRecords.style.display = "none") {
+        modalRecords.style.display = "flex"
+    }
+    if(!document.getElementById("my-chart")){
+        await renderChart((await dadosPonto(id)))
+    } else {
+        document.getElementById("my-chart").remove()
+        await renderChart((await dadosPonto(id)))
+    }
+}
+
 const renderList = async (data) => {
     data.forEach(id => {
         const pointEl = document.createElement("div")
@@ -133,18 +131,28 @@ const renderChart = (dados) => {
     
     modalRecords.append(chart)
     
-    const labels = dados.map(dado=>dado.data)
+    const labels = dados.map(dado=>dado?.data)
 
+    // Função para seleção de cores para cada dataset
     const colorDataset = (index) => {
         const colors = ["#00a1ff", "rgb(185 96 187 / 73%)", "rgb(96 187 162 / 73%)", "#bac55b"]
-        if (index <= colors.length) {
-            return colors[index]
-        } 
+        const select = index % colors.length
+
+        return colors[select]    
     }
+    console.log(Object.keys(dados[0]));
+    
+
+    console.log(dados[0]);
+
+    // Retirando a chave data
+    const propertiesKeys = Object.keys(dados[0]).filter(dado => dado !== 'data')
     
     const data = {
         labels,
-        datasets: Object.keys(dados[0]).map((propertie,index)=> {
+        
+        // Renderização dinamica
+        datasets: propertiesKeys.map((propertie,index)=> {
             const dataset = {
                 data: dados.map(dado=>dado[propertie]),
                 label: propertie,
@@ -192,9 +200,7 @@ const renderChart = (dados) => {
 
 const listarDadosUsuario = async () => {
     const dados = await dadosUsuario()
-    
-    console.log(dados)
-    
+      
     const avatar = document.createElement("img")
     avatar.className = "avatar"
     avatar.src = dados.avatar
@@ -253,13 +259,15 @@ const listarDadosUsuario = async () => {
     
     function onEachFeature(feature, layer) {
         
-        let popupContent;
+        let popupContent = feature.properties.popupContent
         if (feature.properties && feature.properties.popupContent) {
-            
-            Object.keys(feature.properties).forEach(propertie =>{
-                popupContent += `<br>` +feature.properties[propertie]
-            })
-    }
+                popupContent += `<br> Precipitação: ` + feature.properties.precipitacao
+                popupContent += `<br> Temperatura: ` + feature.properties.temperatura
+                popupContent += `<br> Umidade: ` + feature.properties.umidade
+                popupContent += `<br> Vento: ` + feature.properties.vento
+                popupContent += `<br> Visibilidade: ` + feature.properties.visibilidade
+                popupContent += `<br> <button value ="${feature.properties.id}" class="btn_historico">Histórico</button>`            
+        }
 
     layer.bindPopup(popupContent);
 }
